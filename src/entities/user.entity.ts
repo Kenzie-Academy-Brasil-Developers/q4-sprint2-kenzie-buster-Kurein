@@ -1,4 +1,5 @@
 import { Entity, Column, PrimaryColumn } from "typeorm";
+import { compare } from "bcrypt";
 import { v4 as uuid } from "uuid";
 
 @Entity()
@@ -17,6 +18,10 @@ export class User {
 
   @Column({ default: true })
   isAdm: boolean;
+
+  comparePwd = async (pwdString: string): Promise<boolean> => {
+    return await compare(pwdString, this.password);
+  };
 
   constructor() {
     if (!this.id) {
