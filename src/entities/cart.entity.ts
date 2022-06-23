@@ -1,4 +1,11 @@
-import { Entity, Column, PrimaryColumn, OneToOne, JoinColumn } from "typeorm";
+import {
+  Entity,
+  Column,
+  PrimaryColumn,
+  OneToOne,
+  JoinColumn,
+  ManyToOne,
+} from "typeorm";
 import { v4 as uuid } from "uuid";
 import { User } from "./user.entity";
 import { Dvd } from "./dvd.entity";
@@ -14,11 +21,11 @@ export class Cart {
   @Column("float")
   total: number;
 
-  @OneToOne((type) => User, { eager: true })
+  @ManyToOne((type) => User, { eager: true })
   @JoinColumn()
   user: User;
 
-  @OneToOne((type) => Dvd, { eager: true })
+  @ManyToOne((type) => Dvd, { eager: true })
   @JoinColumn()
   dvd: Dvd;
 

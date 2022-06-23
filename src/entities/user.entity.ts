@@ -1,6 +1,7 @@
-import { Entity, Column, PrimaryColumn } from "typeorm";
+import { Entity, Column, PrimaryColumn, OneToMany } from "typeorm";
 import { compare } from "bcrypt";
 import { v4 as uuid } from "uuid";
+import { Cart } from "./cart.entity";
 
 @Entity()
 export class User {
@@ -18,6 +19,9 @@ export class User {
 
   @Column({ default: true })
   isAdm: boolean;
+
+  @OneToMany(() => Cart, (cart) => cart.user)
+  cart: Cart[];
 
   comparePwd = async (pwdString: string): Promise<boolean> => {
     return await compare(pwdString, this.password);

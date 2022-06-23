@@ -1,5 +1,13 @@
-import { Entity, Column, PrimaryColumn, OneToOne, JoinColumn } from "typeorm";
+import {
+  Entity,
+  Column,
+  PrimaryColumn,
+  OneToOne,
+  JoinColumn,
+  OneToMany,
+} from "typeorm";
 import { v4 as uuid } from "uuid";
+import { Cart } from "./cart.entity";
 import { Stock } from "./stock.entity";
 
 @Entity()
@@ -16,6 +24,9 @@ export class Dvd {
   @OneToOne((type) => Stock, { eager: true })
   @JoinColumn()
   stock: Stock;
+
+  @OneToMany(() => Cart, (cart) => cart.user)
+  cart: Cart[];
 
   constructor() {
     if (!this.id) {
